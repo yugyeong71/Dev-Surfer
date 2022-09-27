@@ -2,6 +2,7 @@ package com.example.devsurfer.oauth;
 
 import java.util.Map;
 
+
 public class GithubOAuth2UserInfo extends OAuth2UserInfo{
 
     public GithubOAuth2UserInfo(Map<String, Object> attributes){
