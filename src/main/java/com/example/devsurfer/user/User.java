@@ -1,7 +1,10 @@
 package com.example.devsurfer.user;
 
+import com.example.devsurfer.ProviderType;
+import com.example.devsurfer.RoleType;
 import com.example.devsurfer.repository.Repository;
 import com.example.devsurfer.ticket.Ticket;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +22,9 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String email;
+    private String email; // userId
+
+    private String password;
 
     private String displayName;
 
@@ -38,4 +43,13 @@ public class User {
 
     @OneToOne(mappedBy = "userId")
     private Ticket ticket;
+
+    // oauth
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private ProviderType providerType;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private RoleType roleType;
 }
