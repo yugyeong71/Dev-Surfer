@@ -1,6 +1,5 @@
 package com.example.devsurfer;
 
-import com.example.devsurfer.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -21,24 +21,26 @@ public class AuthTokenProvider {
     private final Key key;
     private static final String AUTHORITIES_KEY = "role";
 
-    public AuthTokenProvider(String secret){
+    public AuthTokenProvider(String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public AuthToken createAuthToken(String id, Date expiry){
+    public AuthToken createAuthToken(String id, Date expiry) {
         return new AuthToken(id, expiry, key);
     }
 
-    public AuthToken createAuthToken(String id, String role, Date expiry){
+    public AuthToken createAuthToken(String id, String role, Date expiry) {
         return new AuthToken(id, role, expiry, key);
     }
 
-    public AuthToken convertAuthToken(String token){
+    public AuthToken convertAuthToken(String token) {
         return new AuthToken(token, key);
     }
 
-    public Authentication getAuthentication(AuthToken authToken){
-        if(authToken.validate()){
+    public Authentication getAuthentication(AuthToken authToken) {
+
+        if(authToken.validate()) {
+
             Claims claims = authToken.getTokenClaims();
             Collection<? extends GrantedAuthority> authorities =
                     Arrays.stream(new String[]{claims.get(AUTHORITIES_KEY).toString()})

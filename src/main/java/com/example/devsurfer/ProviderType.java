@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum ProviderType {
-    GITHUB
-    //LOCAL
+    GITHUB,
+    LOCAL;
 }

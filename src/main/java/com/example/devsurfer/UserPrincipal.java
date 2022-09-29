@@ -4,6 +4,7 @@ import com.example.devsurfer.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +17,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-@Getter
+@Getter @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {
 
-    private final String email;
+    private final String userId;
     private final String password;
     private final ProviderType providerType;
     private final RoleType roleType;
@@ -29,63 +30,63 @@ public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {
     private Map<String, Object> attributes;
 
     @Override
-    public Map<String, Object> getAttributes(){
+    public Map<String, Object> getAttributes() {
         return attributes;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
     @Override
-    public String getName(){
-        return email;
+    public String getName() {
+        return userId;
     }
 
     @Override
-    public String getUsername(){
-        return email;
+    public String getUsername() {
+        return userId;
     }
 
     @Override
-    public boolean isAccountNonExpired(){
+    public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked(){
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired(){
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return true;
     }
 
     @Override
-    public Map<String, Object> getClaims(){
+    public Map<String, Object> getClaims() {
         return null;
     }
 
     @Override
-    public OidcUserInfo getUserInfo(){
+    public OidcUserInfo getUserInfo() {
         return null;
     }
 
     @Override
-    public OidcIdToken getIdToken(){
+    public OidcIdToken getIdToken() {
         return null;
     }
 
-    public static UserPrincipal create(User user){
+    public static UserPrincipal create(User user) {
         return new UserPrincipal(
-                user.getEmail(),
+                user.getUserId(),
                 user.getPassword(),
                 user.getProviderType(),
                 RoleType.USER,
@@ -97,10 +98,11 @@ public class UserPrincipal implements OAuth2User, UserDetails, OidcUser {
         this.attributes = attributes;
     }
 
-    public static UserPrincipal create(User user, Map<String, Object> attributes){
+    public static UserPrincipal create(User user, Map<String, Object> attributes) {
         UserPrincipal userPrincipal = create(user);
         userPrincipal.setAttributes(attributes);
 
         return userPrincipal;
     }
+
 }

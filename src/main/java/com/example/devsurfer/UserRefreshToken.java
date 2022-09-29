@@ -1,5 +1,6 @@
 package com.example.devsurfer;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +19,22 @@ public class UserRefreshToken {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long refreshTokenSeq;
 
-    private String email;
+    @NotNull
+    private String userId;
 
+    @NotNull
     private String refreshToken;
+
+    public UserRefreshToken(
+            @NotNull String userId,
+            @NotNull String refreshToken
+    ) {
+        this.userId = userId;
+        this.refreshToken = refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
+    }
 
 }
