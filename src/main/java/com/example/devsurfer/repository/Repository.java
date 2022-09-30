@@ -1,6 +1,6 @@
 package com.example.devsurfer.repository;
 
-import com.example.devsurfer.ticket.Ticket;
+import com.example.devsurfer.ticket.entity.Ticket;
 import com.example.devsurfer.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
